@@ -1,0 +1,8 @@
+markdown
+pymupdf
+pdfkit
+markdown2pdf
+fpdf
+weasyprint
+PyPDF2
+tabulate

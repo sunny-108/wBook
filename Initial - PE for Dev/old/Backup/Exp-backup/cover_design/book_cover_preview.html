@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Cover Preview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .book-container {
+            perspective: 2000px;
+            width: 600px;
+            height: 800px;
+        }
+        
+        .book {
+            transform-style: preserve-3d;
+            transform: rotateY(-30deg);
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s;
+        }
+        
+        .book:hover {
+            transform: rotateY(0deg);
+        }
+        
+        .book-cover {
+            position: absolute;
+            width: 450px;
+            height: 700px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.3);
+            border-radius: 5px;
+        }
+        
+        .front-cover {
+            background: linear-gradient(to top, #0A2342, #2C74B3, #483D8B);
+            padding: 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform: translateZ(20px);
+        }
+        
+        .spine {
+            width: 40px;
+            height: 700px;
+            background: linear-gradient(to top, #0A2342, #2C74B3);
+            position: absolute;
+            left: -40px;
+            top: 0;
+            transform: rotateY(-90deg) translateZ(20px);
+            transform-origin: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            box-sizing: border-box;
+        }
+        
+        .spine-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .spine-author {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .code-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            overflow: hidden;
+            pointer-events: none;
+            border-radius: 5px;
+        }
+        
+        .code-snippet {
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #d4d4d4;
+            font-size: 9px;
+            line-height: 1.4;
+        }
+        
+        .title-container {
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .main-title {
+            color: white;
+            font-size: 36px;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .subtitle {
+            color: #B5D0FF;
+            font-size: 20px;
+            font-weight: 300;
+            margin-top: 15px;
+            margin-bottom: 0;
+        }
+        
+        .graphic {
+            margin: 30px auto;
+            height: 280px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .code-column {
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            width: 150px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 11px;
+            color: #d4d4d4;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        
+        .prompt-column {
+            background-color: rgba(49, 49, 68, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            width: 150px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 11px;
+            color: #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        
+        .connector {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+        
+        .keyword { color: #569CD6; }
+        .string { color: #CE9178; }
+        .comment { color: #6A9955; }
+        .function { color: #DCDCAA; }
+        .variable { color: #9CDCFE; }
+        
+        .author {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 16px;
+            font-weight: 300;
+        }
+        
+        .brackets {
+            position: absolute;
+            font-size: 120px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.1);
+            font-family: 'Consolas', monospace;
+        }
+        
+        .bracket-left {
+            top: 40%;
+            left: 15px;
+        }
+        
+        .bracket-right {
+            top: 40%;
+            right: 15px;
+        }
+        
+        /* SVG Styles */
+        .connection-path {
+            stroke: #00FFFF;
+            stroke-width: 2;
+            stroke-dasharray: 5;
+            stroke-dashoffset: 0;
+            fill: none;
+            animation: flow 2s linear infinite;
+        }
+        
+        .node {
+            fill: #8A2BE2;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes flow {
+            to {
+                stroke-dashoffset: -20;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                r: 3;
+                fill-opacity: 0.6;
+            }
+            100% {
+                r: 5;
+                fill-opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <div class="spine">
+                <div class="spine-text">PROMPT ENGINEERING FOR DEVELOPERS</div>
+                <div class="spine-author">SUNNY SHIVAM</div>
+            </div>
+            <div class="book-cover front-cover">
+                <div class="code-background">
+                    <div class="code-snippet">
+                        <pre>
+def generate_response(prompt: str, model: str = "gpt-4") -> str:
+    """
+    Generate a response from the LLM based on the given prompt.
+    
+    Args:
+        prompt: The input prompt text
+        model: The model to use for generation
+        
+    Returns:
+        The generated response as a string
+    """
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=1000
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        logger.error(f"Error generating response: {e}")
+        return None
+        
+def chain_of_thought(question: str, steps: int = 3) -> str:
+    """
+    Implement Chain-of-Thought prompting for complex reasoning.
+    
+    Args:
+        question: The complex question requiring multi-step reasoning
+        steps: The number of reasoning steps to include
+        
+    Returns:
+        The final answer with reasoning steps
+    """
+    prompt = f"""
+    Question: {question}
+    
+    Please solve this step-by-step:
+    1. Break down the problem
+    2. Work through each part sequentially
+    3. Combine the results for a final answer
+    
+    Provide your complete thought process.
+    """
+    
+    response = generate_response(prompt)
+    return response
+
+# Example usage
+result = chain_of_thought(
+    "How would you design a system that uses LLMs to assist with code reviews?"
+)
+                        </pre>
+                    </div>
+                </div>
+                
+                <div class="title-container">
+                    <h1 class="main-title">PROMPT ENGINEERING</h1>
+                    <h2 class="main-title" style="font-size: 28px;">FOR DEVELOPERS</h2>
+                    <p class="subtitle">Crafting Intelligent LLM Solutions</p>
+                </div>
+                
+                <div class="graphic">
+                    <div class="code-column">
+                        <span class="keyword">def</span> <span class="function">prompt_for_code</span>():
+                        <br>&nbsp;&nbsp;<span class="variable">result</span> = <span class="string">"hello"</span>
+                        <br>&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">result</span>
+                    </div>
+                    
+                    <svg class="connector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+                        <!-- Connection paths between code and natural language -->
+                        <path class="connection-path" d="M150,70 C190,50 210,50 250,70" />
+                        <path class="connection-path" d="M150,140 C190,120 210,120 250,140" />
+                        <path class="connection-path" d="M150,210 C190,190 210,190 250,210" />
+                        
+                        <!-- Nodes representing the transformation -->
+                        <circle class="node" cx="170" cy="60" r="4" />
+                        <circle class="node" cx="200" cy="40" r="4" />
+                        <circle class="node" cx="230" cy="60" r="4" />
+                        
+                        <circle class="node" cx="180" cy="130" r="4" />
+                        <circle class="node" cx="200" cy="110" r="4" />
+                        <circle class="node" cx="220" cy="130" r="4" />
+                        
+                        <circle class="node" cx="170" cy="200" r="4" />
+                        <circle class="node" cx="200" cy="180" r="4" />
+                        <circle class="node" cx="230" cy="200" r="4" />
+                    </svg>
+                    
+                    <div class="prompt-column">
+                        Write a Python function that:
+                        <br>1. Takes a string input
+                        <br>2. Processes the text
+                        <br>3. Returns a greeting
+                    </div>
+                </div>
+                
+                <div class="author">By Sunny Shivam</div>
+                
+                <div class="brackets bracket-left">{</div>
+                <div class="brackets bracket-right">}</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

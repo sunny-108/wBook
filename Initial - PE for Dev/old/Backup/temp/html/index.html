@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Index</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 2cm;
+            @bottom-center {
+                content: "Page " counter(page);
+            }
+        }
+        
+        body {
+            font-family: "Helvetica", "Arial", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0 0.5cm;
+            font-size: 10.5pt;
+        }
+        
+        h1 {
+            font-size: 24pt;
+            color: #2c3e50;
+            text-align: center;
+            page-break-before: always;
+            margin-top: 1.5cm;
+            margin-bottom: 1cm;
+        }
+        
+        .index-container {
+            column-count: 2;
+            column-gap: 2em;
+            column-rule: 1px solid #ddd;
+        }
+        
+        .index-entry {
+            margin-bottom: 0.5em;
+            break-inside: avoid;
+        }
+        
+        .main-entry {
+            font-weight: bold;
+        }
+        
+        .sub-entry {
+            margin-left: 1.5em;
+            font-weight: normal;
+        }
+        
+        .page-numbers {
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <h1>Index</h1>
+    
+    <div class="index-container">
+        <div class="index-entry">
+            <span class="main-entry">API Keys</span> <span class="page-numbers">12, 18</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Bias in AI</span> <span class="page-numbers">5, 110</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Chain-of-Thought (CoT) Prompting</span> <span class="page-numbers">72-75</span>
+            <div class="sub-entry">example implementation <span class="page-numbers">76</span></div>
+            <div class="sub-entry">use cases <span class="page-numbers">73</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Code Generation</span> <span class="page-numbers">45-50</span>
+            <div class="sub-entry">functions <span class="page-numbers">46</span></div>
+            <div class="sub-entry">classes <span class="page-numbers">48</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Cost Optimization</span> <span class="page-numbers">32, 94-96</span>
+            <div class="sub-entry">token counting <span class="page-numbers">94</span></div>
+            <div class="sub-entry">caching <span class="page-numbers">95</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Debugging</span> <span class="page-numbers">52, 88</span>
+            <div class="sub-entry">LLM applications <span class="page-numbers">88</span></div>
+            <div class="sub-entry">ML models <span class="page-numbers">145-150</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Documentation Generation</span> <span class="page-numbers">51</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Error Handling</span> <span class="page-numbers">28, 78</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Few-shot Prompting</span> <span class="page-numbers">38</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Hallucinations</span> <span class="page-numbers">24, 80</span>
+            <div class="sub-entry">mitigation strategies <span class="page-numbers">81</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">LLM APIs</span> <span class="page-numbers">22-30</span>
+            <div class="sub-entry">OpenAI <span class="page-numbers">23</span></div>
+            <div class="sub-entry">Google Gemini <span class="page-numbers">25</span></div>
+            <div class="sub-entry">Anthropic Claude <span class="page-numbers">26</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Model Explainability</span> <span class="page-numbers">120-135</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Performance Profiling</span> <span class="page-numbers">90-92</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Persona-Based Prompting</span> <span class="page-numbers">77</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Prompt</span> <span class="page-numbers">1-5</span>
+            <div class="sub-entry">anatomy of <span class="page-numbers">34</span></div>
+            <div class="sub-entry">chaining <span class="page-numbers">78</span></div>
+            <div class="sub-entry">libraries <span class="page-numbers">87</span></div>
+            <div class="sub-entry">patterns <span class="page-numbers">45-60</span></div>
+            <div class="sub-entry">version control <span class="page-numbers">16</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Self-Correction</span> <span class="page-numbers">74</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Temperature</span> <span class="page-numbers">76</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Testing</span> <span class="page-numbers">40, 92-93</span>
+            <div class="sub-entry">prompt effectiveness <span class="page-numbers">40</span></div>
+            <div class="sub-entry">LLM applications <span class="page-numbers">92</span></div>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Token Management</span> <span class="page-numbers">30-32</span>
+        </div>
+        
+        <div class="index-entry">
+            <span class="main-entry">Zero-shot Prompting</span> <span class="page-numbers">37</span>
+        </div>
+    </div>
+</body>
+</html>
